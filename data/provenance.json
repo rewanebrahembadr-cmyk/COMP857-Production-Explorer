@@ -11,6 +11,6 @@
     "Joint sample": 26
   },
   "joint_selection": "Every 40th row, starting at row index 0, from the 1023-row joint experiment",
-  "comparison_tolerance": 1e-06,
-  "reference_file_sha256": "ceaafc23fb6e8621a2d202bfa5bd25981ca8ab6eb48fe02986a8551f9eb1b1ad"
+  "comparison_tolerance": 0.000001,
+  "reference_file_sha256": "32e9f1a965e7e5434b27e5d2707230b2653de935a02f61f9d4da40131b56e675"
 }

@@ -1,0 +1,16 @@
+{
+  "source_notebook": "Bassam_project_group_Report_Final.ipynb",
+  "source_notebook_sha256": "c8387d1d39cb9297e1beb45f9bfdf1ee3f1e7023e32a760905ab0d3947a68677",
+  "source": "Exported Gurobi scenario tables from the final project notebook",
+  "source_validation_cell": 75,
+  "cases": {
+    "Machine": 51,
+    "Staff": 43,
+    "Profit A": 99,
+    "Minimum C": 48,
+    "Joint sample": 26
+  },
+  "joint_selection": "Every 40th row, starting at row index 0, from the 1023-row joint experiment",
+  "comparison_tolerance": 1e-06,
+  "reference_file_sha256": "ceaafc23fb6e8621a2d202bfa5bd25981ca8ab6eb48fe02986a8551f9eb1b1ad"
+}

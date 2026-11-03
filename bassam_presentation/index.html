@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How much is one more staff hour worth? · Bassam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400..700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:#0A1320;overflow:hidden}
+#stage{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0}
+.slide{position:absolute;inset:0;width:1920px;height:1080px;opacity:0;pointer-events:none;transition:opacity .45s ease}
+.slide.active{opacity:1;pointer-events:auto}
+h1,h2,h3,p{margin:0}
+table{border-collapse:separate;border-spacing:0;overflow:hidden}
+th,td{padding:.35em .6em;border-bottom:1px solid rgba(20,33,61,.12)}
+tr:last-child td{border-bottom:none}
+[data-anim]{opacity:0;transition:opacity .6s ease,transform .6s cubic-bezier(.2,.8,.2,1)}
+[data-anim="rise"]{transform:translateY(40px)}[data-anim="left"]{transform:translateX(-80px)}
+[data-anim="pop"]{transform:scale(.85)}[data-anim].in{opacity:1;transform:none}
+.cw{display:flex;gap:24px;height:100%}
+.cc{flex:1;background:rgba(255,255,255,.05);border:1px solid #2A4268;border-radius:22px;padding:30px 34px;display:flex;flex-direction:column;justify-content:space-between;font-family:"Segoe UI",Helvetica,Arial,sans-serif;color:#F4F1EA}
+.cc.big{flex:1.7;background:rgba(242,165,65,.10);border-color:#F2A541}
+.cl{font-size:30px;color:#C3CFDF}.cv{font-size:104px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.cc.big .cv{font-size:128px;color:#F2A541}.cu{font-size:28px;color:#8597B3}
+#count{position:fixed;right:14px;bottom:10px;font:14px Arial,sans-serif;color:#5d6b80;opacity:.6}
+body.static{overflow:visible;height:auto}body.static #stage{position:static;transform:none!important}
+body.static .slide{position:relative;opacity:1;page-break-after:always;break-after:page}
+body.static #count{display:none}
+@page{size:1920px 1080px;margin:0}
+
+#presentation-controls{position:fixed;bottom:0;left:0;right:0;height:64px;display:flex;align-items:center;justify-content:center;gap:12px;background:#0A1320;border-top:1px solid #2A4268;z-index:100;font:14px Arial,sans-serif;color:#F4F1EA}
+#presentation-controls button{padding:10px 16px;border:1px solid #526785;border-radius:8px;background:#182b46;color:#fff;cursor:pointer;font:inherit}
+#presentation-controls button:hover{background:#294667}#presentation-controls button:disabled{opacity:.4;cursor:default}#count{bottom:78px}.static #presentation-controls{display:none}
+@media(max-width:600px){#presentation-controls{gap:5px}#presentation-controls button{padding:10px 8px;font-size:12px}}
+</style></head>
+<body><div id="stage">
+<section class="slide" id="cover" style="background:linear-gradient(135deg, #0F1B2D 0%, #13294A 100%);color:#F4F1EA;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:center;gap:32px">
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:28px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:#F2A541">COMP857 · Individual presentation</p>
+<h1 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:104px;font-weight:700;line-height:1.05;color:#F4F1EA;width:1300px">How much is one more staff hour worth?</h1>
+<p style="font-size:36px;line-height:1.4;color:#C3CFDF;width:1200px">Sensitivity of the optimal production plan to staff-hour availability</p>
+<p style="font-size:34px;font-weight:600;color:#F4F1EA">Presented by Bassam</p>
+<div style="position:absolute;left:128px;bottom:120px;width:1664px;height:4px;background:#24395A"></div>
+<p data-anim="rise" data-order="1" style="position:absolute;left:128px;bottom:150px;width:420px;font-family:'Space Grotesk', Arial, sans-serif;font-size:64px;font-weight:700;color:#4C9BE8">£24</p>
+<p data-anim="rise" data-order="2" style="position:absolute;left:420px;bottom:150px;width:420px;font-family:'Space Grotesk', Arial, sans-serif;font-size:64px;font-weight:700;color:#F2A541">→ £1.60</p>
+<p data-anim="rise" data-order="3" style="position:absolute;left:800px;bottom:150px;width:420px;font-family:'Space Grotesk', Arial, sans-serif;font-size:64px;font-weight:700;color:#8597B3">→ £0</p>
+<p data-anim="fade" data-order="4" style="position:absolute;left:1120px;bottom:166px;width:672px;font-size:28px;color:#C3CFDF">the value of one extra staff hour, as staff time grows</p>
+
+</section>
+
+<section class="slide" id="problem" style="background:#F4F1EA;color:#14213D;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:24px">
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:26px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#B5671A">The problem</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#14213D">Three products, three resources, two policies</h2>
+<table data-anim="fade" data-order="1" style="position:absolute;left:128px;top:380px;width:860px;font-size:30px;color:#14213D;background:#FBFAF6;border:1px solid #D9D3C4;border-radius:16px">
+<tr><th style="width:40%;text-align:left">Per unit</th><th style="width:20%;text-align:center">A</th><th style="width:20%;text-align:center">B</th><th style="width:20%;text-align:center">C</th></tr>
+<tr><td>Machine hours</td><td style="text-align:center">4</td><td style="text-align:center">3</td><td style="text-align:center">5</td></tr>
+<tr style="background:#FCE9CF"><td>Staff hours</td><td style="text-align:center">2</td><td style="text-align:center">4</td><td style="text-align:center">3</td></tr>
+<tr><td>Raw material</td><td style="text-align:center">3</td><td style="text-align:center">2</td><td style="text-align:center">4</td></tr>
+<tr><td>Profit (£)</td><td style="text-align:center">48</td><td style="text-align:center">40</td><td style="text-align:center">55</td></tr>
+</table>
+<p data-anim="rise" data-order="2" style="position:absolute;left:1080px;top:380px;width:712px;font-size:30px;background:#FBFAF6;border:1px solid #D9D3C4;border-radius:14px;padding:18px 28px">Machine time  ≤ 240 hours</p>
+<p data-anim="rise" data-order="3" style="position:absolute;left:1080px;top:476px;width:712px;font-size:30px;font-weight:600;background:#F2A541;color:#14213D;border-radius:14px;padding:18px 28px">Staff time  ≤ 180 hours  ← varied</p>
+<p data-anim="rise" data-order="4" style="position:absolute;left:1080px;top:572px;width:712px;font-size:30px;background:#FBFAF6;border:1px solid #D9D3C4;border-radius:14px;padding:18px 28px">Raw material  ≤ 200 units</p>
+<p data-anim="rise" data-order="5" style="position:absolute;left:1080px;top:668px;width:712px;font-size:30px;background:#FBFAF6;border:1px solid #D9D3C4;border-radius:14px;padding:18px 28px">At least 8 units of C</p>
+<p data-anim="rise" data-order="6" style="position:absolute;left:1080px;top:764px;width:712px;font-size:30px;background:#FBFAF6;border:1px solid #D9D3C4;border-radius:14px;padding:18px 28px">B at most twice A</p>
+<p style="position:absolute;left:128px;bottom:64px;width:1300px;font-size:24px;color:#6B6455">COMP857 · Sensitivity to staff hours · Maximise 48A + 40B + 55C</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;text-align:right;font-size:24px;color:#6B6455">2</p>
+
+</section>
+
+<section class="slide" id="baseline" style="background:#0F1B2D;color:#F4F1EA;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:24px">
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:26px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#F2A541">Starting point · 180 staff hours</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#F4F1EA">The baseline optimal plan</h2>
+<div class="chart" data-chart="count" style="position:absolute;left:128px;top:340px;width:1664px;height:380px"></div>
+<p data-anim="rise" data-order="1" style="position:absolute;left:128px;top:760px;width:530px;font-size:28px;background:#1B2D4A;border-left:6px solid #4C9BE8;border-radius:10px;padding:18px 24px">Machine 240 / 240 · <b>binding</b></p>
+<p data-anim="rise" data-order="2" style="position:absolute;left:695px;top:760px;width:530px;font-size:28px;background:#1B2D4A;border-left:6px solid #F2A541;border-radius:10px;padding:18px 24px">Staff 180 / 180 · <b>binding</b></p>
+<p data-anim="rise" data-order="3" style="position:absolute;left:1262px;top:760px;width:530px;font-size:28px;background:#1B2D4A;border-left:6px solid #8597B3;border-radius:10px;padding:18px 24px">Material 176.4 / 200 · 23.6 spare</p>
+<p style="position:absolute;left:128px;bottom:64px;width:1300px;font-size:24px;color:#8597B3">COMP857 · Sensitivity to staff hours · Solved with Gurobi (primal simplex)</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;text-align:right;font-size:24px;color:#8597B3">3</p>
+
+</section>
+
+<section class="slide" id="method" style="background:#F4F1EA;color:#14213D;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:24px">
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:26px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#B5671A">The experiment</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#14213D">Change one number, re-solve every time</h2>
+<p data-anim="rise" data-order="1" style="position:absolute;left:128px;top:360px;width:760px;font-size:30px;line-height:1.35;background:#FBFAF6;border:1px solid #D9D3C4;border-radius:14px;padding:22px 28px"><b>Vary</b> staff hours from 80 to 280 in steps of 5, plus the exact breakpoints 124 and 224</p>
+<p data-anim="rise" data-order="2" style="position:absolute;left:128px;top:500px;width:760px;font-size:30px;line-height:1.35;background:#FBFAF6;border:1px solid #D9D3C4;border-radius:14px;padding:22px 28px"><b>Hold fixed</b> machine time (240), material (200), unit profits and both policies</p>
+<p data-anim="rise" data-order="3" style="position:absolute;left:128px;top:640px;width:760px;font-size:30px;line-height:1.35;background:#FBFAF6;border:1px solid #D9D3C4;border-radius:14px;padding:22px 28px"><b>Rebuild and re-solve</b> in Gurobi, then record profit, plan and binding constraints</p>
+<div data-anim="fade" data-order="4" style="position:absolute;left:960px;top:360px;width:832px;height:470px;background:#14213D;border-radius:18px;padding:32px 36px;display:flex;flex-direction:column;gap:6px;font-family:'JetBrains Mono', 'Courier New', monospace;color:#E6EDF7">
+<p style="font-size:24px;color:#8597B3"># notebook, Section 5</p>
+<p style="font-size:24px">staff_capacities = sorted(set(</p>
+<p style="font-size:24px">&#160;&#160;np.arange(80, 281, 5).tolist()</p>
+<p style="font-size:24px">&#160;&#160;+ [staff.SARHSLow, staff.RHS,</p>
+<p style="font-size:24px">&#160;&#160;&#160;&#160;&#160;staff.SARHSUp]))</p>
+<p style="font-size:24px">&#160;</p>
+<p style="font-size:24px"><span style="color:#F2A541">for</span> capacity <span style="color:#F2A541">in</span> staff_capacities:</p>
+<p style="font-size:24px">&#160;&#160;result = solve_resource_scenario(</p>
+<p style="font-size:24px">&#160;&#160;&#160;&#160;"Staff", capacity)</p>
+<p style="font-size:24px">&#160;&#160;staff_rows.append(result)</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1300px;font-size:24px;color:#6B6455">COMP857 · Sensitivity to staff hours · 43 solved cases</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;text-align:right;font-size:24px;color:#6B6455">4</p>
+
+</section>
+
+<section class="slide" id="profit" style="background:#0F1B2D;color:#F4F1EA;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:24px">
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:26px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#F2A541">Result 1 · optimal profit</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#F4F1EA">Three straight segments, and each is flatter</h2>
+<div class="chart" data-chart="profit" style="position:absolute;left:128px;top:300px;width:1664px;height:620px"></div>
+<p style="position:absolute;left:128px;bottom:64px;width:1300px;font-size:24px;color:#8597B3">COMP857 · Sensitivity to staff hours · White ring = baseline (180 hours)</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;text-align:right;font-size:24px;color:#8597B3">5</p>
+
+</section>
+
+<section class="slide" id="mix" style="background:#0F1B2D;color:#F4F1EA;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:24px">
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:26px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#F2A541">Result 2 · production plan</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#F4F1EA">The mix shifts from A towards B</h2>
+<div class="chart" data-chart="mix" style="position:absolute;left:128px;top:300px;width:1664px;height:620px"></div>
+<p style="position:absolute;left:128px;bottom:64px;width:1300px;font-size:24px;color:#8597B3">COMP857 · Sensitivity to staff hours · Same 43 solves as the profit curve</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;text-align:right;font-size:24px;color:#8597B3">6</p>
+
+</section>
+
+<section class="slide" id="phase1" style="background:#F4F1EA;color:#14213D;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:24px">
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:26px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#1F6FBF">Phase 1 · 24 to 124 hours</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#14213D">Staff is the only bottleneck, so every hour goes to A</h2>
+<p style="position:absolute;left:128px;top:390px;width:900px;font-size:28px;color:#4A5568">Profit per staff hour</p>
+<p data-anim="left" data-order="1" style="position:absolute;left:128px;top:450px;width:900px;font-size:30px;font-weight:600;color:#F4F1EA;background:#1F6FBF;border-radius:10px;padding:16px 24px">A  ·  £48 ÷ 2  =  £24.00</p>
+<p data-anim="left" data-order="2" style="position:absolute;left:128px;top:550px;width:690px;font-size:30px;font-weight:600;color:#14213D;background:#AEBBD0;border-radius:10px;padding:16px 24px">C  ·  £55 ÷ 3  =  £18.33</p>
+<p data-anim="left" data-order="3" style="position:absolute;left:128px;top:650px;width:470px;font-size:30px;font-weight:600;color:#14213D;background:#F2C48A;border-radius:10px;padding:16px 24px">B  ·  £40 ÷ 4  =  £10</p>
+<div data-anim="rise" data-order="4" style="position:absolute;left:1100px;top:390px;width:692px;height:410px;background:#14213D;border-radius:20px;padding:40px 44px;display:flex;flex-direction:column;justify-content:space-between">
+<p style="font-size:28px;color:#C3CFDF">One extra staff hour</p>
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:700;color:#F4F1EA;line-height:1.2">→ ½ unit of A<br>→ ½ × £48 = <span style="color:#4C9BE8">£24</span></p>
+<p style="font-size:26px;color:#C3CFDF;line-height:1.4">Machines still have spare hours here, so nothing else limits A.</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1300px;font-size:24px;color:#6B6455">COMP857 · Sensitivity to staff hours · Binding: staff, minimum C, B = 0</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;text-align:right;font-size:24px;color:#6B6455">7</p>
+
+</section>
+
+<section class="slide" id="phase2" style="background:#0F1B2D;color:#F4F1EA;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:24px">
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:26px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#F2A541">Phase 2 · 124 to 224 hours</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#F4F1EA">Machines bind too, so A must be swapped for B</h2>
+<div style="position:absolute;left:128px;top:370px;width:1040px;height:72px;display:flex;flex-direction:row;align-items:center;border-bottom:2px solid #2A4268">
+<p style="width:330px;font-size:26px;color:#8597B3">Per extra staff hour</p>
+<p style="width:230px;font-size:30px;font-weight:600;color:#4C9BE8;text-align:right">A: −0.3</p>
+<p style="width:230px;font-size:30px;font-weight:600;color:#F2A541;text-align:right">B: +0.4</p>
+<p style="width:250px;font-size:30px;font-weight:600;color:#F4F1EA;text-align:right">Net</p>
+</div>
+<div data-anim="rise" data-order="1" style="position:absolute;left:128px;top:460px;width:1040px;height:84px;display:flex;flex-direction:row;align-items:center;background:#16263F;border-radius:12px">
+<p style="width:330px;font-size:30px;color:#C3CFDF;padding:0 0 0 20px">Machine hours</p>
+<p style="width:230px;font-size:30px;text-align:right">−1.2</p>
+<p style="width:230px;font-size:30px;text-align:right">+1.2</p>
+<p style="width:250px;font-size:34px;font-weight:700;text-align:right;color:#F4F1EA">0</p>
+</div>
+<div data-anim="rise" data-order="2" style="position:absolute;left:128px;top:560px;width:1040px;height:84px;display:flex;flex-direction:row;align-items:center;background:#16263F;border-radius:12px">
+<p style="width:330px;font-size:30px;color:#C3CFDF;padding:0 0 0 20px">Staff hours</p>
+<p style="width:230px;font-size:30px;text-align:right">−0.6</p>
+<p style="width:230px;font-size:30px;text-align:right">+1.6</p>
+<p style="width:250px;font-size:34px;font-weight:700;text-align:right;color:#F4F1EA">+1</p>
+</div>
+<div data-anim="rise" data-order="3" style="position:absolute;left:128px;top:660px;width:1040px;height:96px;display:flex;flex-direction:row;align-items:center;background:#3A2A12;border:2px solid #F2A541;border-radius:12px">
+<p style="width:330px;font-size:30px;color:#F4F1EA;padding:0 0 0 20px">Profit</p>
+<p style="width:230px;font-size:30px;text-align:right">−£14.40</p>
+<p style="width:230px;font-size:30px;text-align:right">+£16.00</p>
+<p style="width:250px;font-size:44px;font-weight:700;text-align:right;color:#F2A541">+£1.60</p>
+</div>
+<div data-anim="fade" data-order="4" style="position:absolute;left:1240px;top:370px;width:552px;height:386px;background:#16263F;border:1px solid #2A4268;border-radius:20px;padding:36px 40px;display:flex;flex-direction:column;justify-content:space-between">
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:36px;font-weight:700;color:#F4F1EA">Why so small?</p>
+<p style="font-size:28px;line-height:1.4;color:#C3CFDF">The swap only moves 1.2 machine hours from A (£12 per hour) to B (£13.33 per hour).</p>
+<p style="font-size:30px;font-weight:600;color:#F2A541">1.2 × £1.33 = £1.60</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1300px;font-size:24px;color:#8597B3">COMP857 · Sensitivity to staff hours · Binding: machine, staff, minimum C</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;text-align:right;font-size:24px;color:#8597B3">8</p>
+
+</section>
+
+<section class="slide" id="phase3" style="background:#F4F1EA;color:#14213D;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:24px">
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:26px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#5A6B85">Phase 3 · above 224 hours</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#14213D">The B ≤ 2A policy locks the plan in place</h2>
+<div data-anim="pop" data-order="1" style="position:absolute;left:128px;top:380px;width:760px;height:400px;background:#14213D;border-radius:22px;padding:44px 48px;display:flex;flex-direction:column;justify-content:space-between">
+<p style="font-size:28px;color:#C3CFDF">Plan from 224 hours upwards</p>
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:88px;font-weight:700;color:#F4F1EA">(20, 40, 8)</p>
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:56px;font-weight:700;color:#F2A541">£3,000</p>
+</div>
+<p data-anim="rise" data-order="2" style="position:absolute;left:960px;top:380px;width:832px;font-size:30px;line-height:1.4;background:#FBFAF6;border:1px solid #D9D3C4;border-radius:14px;padding:24px 30px">At 224 hours B reaches twice A: 40 = 2 × 20</p>
+<p data-anim="rise" data-order="3" style="position:absolute;left:960px;top:520px;width:832px;font-size:30px;line-height:1.4;background:#FBFAF6;border:1px solid #D9D3C4;border-radius:14px;padding:24px 30px">Machine time, the ratio and the minimum on C now fix A, B and C</p>
+<p data-anim="rise" data-order="4" style="position:absolute;left:960px;top:660px;width:832px;font-size:30px;line-height:1.4;font-weight:600;background:#D9DEE6;border-radius:14px;padding:24px 30px">Extra staff hours stay idle: their value is £0</p>
+<p style="position:absolute;left:128px;bottom:64px;width:1300px;font-size:24px;color:#6B6455">COMP857 · Sensitivity to staff hours · Binding: machine, minimum C, B = 2A</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;text-align:right;font-size:24px;color:#6B6455">9</p>
+
+</section>
+
+<section class="slide" id="shadow" style="background:#0F1B2D;color:#F4F1EA;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:24px">
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:26px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#F2A541">Link to duality</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#F4F1EA">The middle slope is the shadow price</h2>
+<div data-anim="pop" data-order="1" style="position:absolute;left:128px;top:370px;width:500px;height:420px;background:#3A2A12;border:2px solid #F2A541;border-radius:22px;padding:40px 44px;display:flex;flex-direction:column;justify-content:space-between">
+<p style="font-size:28px;color:#F4D9B0">Gurobi shadow price, staff time</p>
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:120px;font-weight:700;color:#F2A541">£1.60</p>
+<p style="font-size:28px;color:#F4D9B0;line-height:1.35">= the slope between 124 and 224 hours</p>
+</div>
+<div data-anim="rise" data-order="2" style="position:absolute;left:680px;top:370px;width:1112px;height:196px;background:#16263F;border:1px solid #2A4268;border-radius:20px;padding:32px 40px;display:flex;flex-direction:column;justify-content:space-between">
+<p style="font-size:28px;color:#C3CFDF">Valid range from the inverse of the optimal basis (Δs = s − 180)</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:30px;color:#F4F1EA">B = 22.4 + 0.4Δs ≥ 0  →  s ≥ 124</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:30px;color:#F4F1EA">sB = 44 − Δs ≥ 0  →  s ≤ 224</p>
+</div>
+<div data-anim="rise" data-order="3" style="position:absolute;left:680px;top:594px;width:1112px;height:196px;background:#16263F;border:1px solid #2A4268;border-radius:20px;padding:32px 40px;display:flex;flex-direction:column;justify-content:space-between">
+<p style="font-size:28px;color:#C3CFDF">Example inside the range: 180 → 200 hours</p>
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:40px;font-weight:700;color:#F4F1EA">20 × £1.60 = <span style="color:#F2A541">+£32</span> → £2,961.60</p>
+<p style="font-size:28px;color:#C3CFDF">Re-solving gives the same profit, with plan (27.2, 30.4, 8)</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1300px;font-size:24px;color:#8597B3">COMP857 · Sensitivity to staff hours · sB = 2A − B, the slack in the ratio policy</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;text-align:right;font-size:24px;color:#8597B3">10</p>
+
+</section>
+
+<section class="slide" id="prediction" style="background:#0F1B2D;color:#F4F1EA;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:24px">
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:26px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#F2A541">Theory against the experiment</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#F4F1EA">Outside its range, the shadow price overpromises</h2>
+<div class="chart" data-chart="pred" style="position:absolute;left:128px;top:300px;width:1664px;height:620px"></div>
+<p style="position:absolute;left:128px;bottom:64px;width:1400px;font-size:24px;color:#8597B3">COMP857 · Sensitivity to staff hours · 100 h: £2,801.60 predicted vs £2,264 · 250 h: £3,041.60 vs £3,000</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;text-align:right;font-size:24px;color:#8597B3">11</p>
+
+</section>
+
+<section class="slide" id="breakpoint" style="background:#F4F1EA;color:#14213D;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:24px">
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:26px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#B5671A">At the breakpoints</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:64px;font-weight:700;line-height:1.1;color:#14213D">One reported price cannot describe both directions</h2>
+<table data-anim="fade" data-order="1" style="position:absolute;left:128px;top:380px;width:1000px;font-size:32px;color:#14213D;background:#FBFAF6;border:1px solid #D9D3C4;border-radius:16px">
+<tr><th style="width:28%;text-align:left">Staff hours</th><th style="width:24%;text-align:center">Left slope</th><th style="width:24%;text-align:center">Right slope</th><th style="width:24%;text-align:center">Gurobi reports</th></tr>
+<tr><td>124</td><td style="text-align:center">£24.00</td><td style="text-align:center">£1.60</td><td style="text-align:center">£24.00</td></tr>
+<tr><td>224</td><td style="text-align:center">£1.60</td><td style="text-align:center">£0.00</td><td style="text-align:center">£1.60</td></tr>
+</table>
+<p data-anim="rise" data-order="2" style="position:absolute;left:128px;top:640px;width:1000px;font-size:30px;line-height:1.4;background:#FBFAF6;border:1px solid #D9D3C4;border-radius:14px;padding:24px 30px">At 124 hours four constraints are active (machine, staff, minimum C, B = 0) where three fix a vertex: the solution is <b>degenerate</b>.</p>
+<div data-anim="pop" data-order="3" style="position:absolute;left:1200px;top:380px;width:592px;height:420px;background:#14213D;border-radius:22px;padding:40px 44px;display:flex;flex-direction:column;justify-content:space-between">
+<p style="font-size:28px;color:#C3CFDF">Slopes only fall</p>
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:56px;font-weight:700;color:#F4F1EA">24 › 1.60 › 0</p>
+<p style="font-size:28px;line-height:1.4;color:#C3CFDF">Profit is <span style="color:#F2A541">concave</span> in staff hours: each extra hour is worth less, never more.</p>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1300px;font-size:24px;color:#6B6455">COMP857 · Sensitivity to staff hours · One-sided differences with a step of 0.001 hours</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;text-align:right;font-size:24px;color:#6B6455">12</p>
+
+</section>
+
+<section class="slide" id="takeaway" style="background:linear-gradient(135deg, #13294A 0%, #0F1B2D 100%);color:#F4F1EA;font-family:'IBM Plex Sans', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:32px">
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:26px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#F2A541">Takeaway</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;color:#F4F1EA;width:1500px">A staff hour is only worth what the other constraints let it produce</h2>
+<div data-anim="rise" data-order="1" style="position:absolute;left:128px;top:520px;width:520px;height:220px;background:#16263F;border-top:6px solid #4C9BE8;border-radius:16px;padding:32px 36px;display:flex;flex-direction:column;justify-content:space-between">
+<p style="font-size:28px;color:#C3CFDF">Up to 124 hours</p>
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:64px;font-weight:700;color:#4C9BE8">£24</p>
+</div>
+<div data-anim="rise" data-order="2" style="position:absolute;left:700px;top:520px;width:520px;height:220px;background:#16263F;border-top:6px solid #F2A541;border-radius:16px;padding:32px 36px;display:flex;flex-direction:column;justify-content:space-between">
+<p style="font-size:28px;color:#C3CFDF">124 to 224 hours</p>
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:64px;font-weight:700;color:#F2A541">£1.60</p>
+</div>
+<div data-anim="rise" data-order="3" style="position:absolute;left:1272px;top:520px;width:520px;height:220px;background:#16263F;border-top:6px solid #AEBBD0;border-radius:16px;padding:32px 36px;display:flex;flex-direction:column;justify-content:space-between">
+<p style="font-size:28px;color:#C3CFDF">Beyond 224 hours</p>
+<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:64px;font-weight:700;color:#AEBBD0">£0</p>
+</div>
+<p data-anim="fade" data-order="4" style="position:absolute;left:128px;top:790px;width:1664px;font-size:32px;line-height:1.4;color:#F4F1EA">At 180 hours, with all else fixed, extra staff time is worth at most £1.60 an hour. More staff pays off mainly together with more machine time.</p>
+<p style="position:absolute;left:128px;bottom:64px;width:1300px;font-size:24px;color:#8597B3">COMP857 · Sensitivity to staff hours · Thank you</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;text-align:right;font-size:24px;color:#8597B3">13</p>
+
+</section>
+
+</div><div id="count"></div>
+<nav id="presentation-controls" aria-label="Presentation controls"><button id="previous-slide" type="button">Previous</button><button id="replay-slide" type="button">Replay animation</button><span id="slide-status" aria-live="polite"></span><button id="next-slide" type="button">Next</button><button id="full-screen" type="button">Full screen</button></nav>
+<script>(function(){
+const NS='http://www.w3.org/2000/svg';
+const STATIC=/[?&]static/.test(location.search);
+function E(t,a,p){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e}
+function fm(v){return '£'+v.toLocaleString('en-GB',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function prof(v){return v<124?24*v-136:v<224?1.6*v+2641.6:3000}
+function keyAt(K,t){for(let i=1;i<K.length;i++)if(t<=K[i][0]){const a=K[i-1],b=K[i];return a[1]+(b[1]-a[1])*(t-a[0])/(b[0]-a[0])}return K[K.length-1][1]}
+const FONT='"Segoe UI",Helvetica,Arial,sans-serif';
+
+/* ---------- chart: profit curve ---------- */
+function chartProfit(host){
+  const s=E('svg',{viewBox:'0 0 1664 620',width:1664,height:620,'font-family':FONT},host);
+  const L=130,R=1150,T=50,B=530,X0=80,X1=280,Y0=1700,Y1=3100;
+  const X=v=>L+(v-X0)/(X1-X0)*(R-L),Y=v=>B-(v-Y0)/(Y1-Y0)*(B-T);
+  const P=[[80,124,'rgba(76,155,232,0.13)','£24 / hour','#4C9BE8'],[124,224,'rgba(242,165,65,0.12)','£1.60 / hour','#F2A541'],[224,280,'rgba(133,151,179,0.12)','£0 / hour','#AEBBD0']];
+  P.forEach(p=>{E('rect',{x:X(p[0]),y:T,width:X(p[1])-X(p[0]),height:B-T,fill:p[2]},s);E('text',{x:(X(p[0])+X(p[1]))/2,y:T+40,'text-anchor':'middle',fill:p[4],'font-size':28,'font-weight':700},s).textContent=p[3]});
+  for(let y=1800;y<=3000;y+=200){E('line',{x1:L,x2:R,y1:Y(y),y2:Y(y),stroke:'#24395A','stroke-width':1},s);E('text',{x:L-16,y:Y(y)+9,'text-anchor':'end',fill:'#8597B3','font-size':24},s).textContent=y.toLocaleString('en-GB')}
+  [80,124,180,224,280].forEach(x=>{E('text',{x:X(x),y:B+38,'text-anchor':'middle',fill:x==180?'#F2A541':'#8597B3','font-size':24,'font-weight':x==180?700:400},s).textContent=x});
+  [124,224].forEach(x=>E('line',{x1:X(x),x2:X(x),y1:T,y2:B,stroke:'#8597B3','stroke-width':2,'stroke-dasharray':'4 8'},s));
+  E('line',{x1:L,x2:R,y1:B,y2:B,stroke:'#8597B3','stroke-width':2},s);
+  E('text',{x:(L+R)/2,y:B+82,'text-anchor':'middle',fill:'#C3CFDF','font-size':26},s).textContent='Staff hours available';
+  E('text',{x:30,y:(T+B)/2,'text-anchor':'middle',fill:'#C3CFDF','font-size':26,transform:'rotate(-90 30 '+(T+B)/2+')'},s).textContent='Optimal profit (£)';
+  E('circle',{cx:X(180),cy:Y(prof(180)),r:9,fill:'none',stroke:'#F4F1EA','stroke-width':3},s);
+  const path=E('path',{fill:'none',stroke:'#4C9BE8','stroke-width':7,'stroke-linejoin':'round','stroke-linecap':'round'},s);
+  const guide=E('line',{y1:T,y2:B,stroke:'#F2A541','stroke-width':2,'stroke-dasharray':'6 8'},s);
+  const dot=E('circle',{r:14,fill:'#F2A541',stroke:'#0F1B2D','stroke-width':4},s);
+  E('rect',{x:1200,y:T,width:440,height:B-T,rx:22,fill:'rgba(255,255,255,0.05)',stroke:'#2A4268','stroke-width':2},s);
+  const lab=(y,t)=>{E('text',{x:1232,y:y,fill:'#8597B3','font-size':24},s).textContent=t};
+  const val=(y,sz,c)=>E('text',{x:1232,y:y,fill:c,'font-size':sz,'font-weight':700},s);
+  lab(T+50,'Staff hours');const vs=val(T+112,56,'#F4F1EA');
+  lab(T+170,'Optimal profit');const vp=val(T+230,52,'#F4F1EA');
+  lab(T+290,'One more hour adds');const vh=val(T+352,56,'#4C9BE8');
+  lab(T+410,'Binding');const vb=E('text',{x:1232,y:T+450,fill:'#C3CFDF','font-size':26},s);
+  const K=[[0,80],[2.2,124],[3,124],[4.6,180],[5.6,180],[7.2,224],[8,224],[9.8,280]];
+  return {K,draw(v){let d='M'+X(80)+','+Y(prof(80));for(let x=81;x<v;x++)d+='L'+X(x)+','+Y(prof(x));d+='L'+X(v)+','+Y(prof(v));path.setAttribute('d',d);
+    guide.setAttribute('x1',X(v));guide.setAttribute('x2',X(v));dot.setAttribute('cx',X(v));dot.setAttribute('cy',Y(prof(v)));
+    vs.textContent=Math.round(v);vp.textContent=fm(prof(v));const ph=v<124?0:v<224?1:2;
+    vh.textContent=['£24.00','£1.60','£0.00'][ph];vh.setAttribute('fill',P[ph][4]);
+    vb.textContent=['Staff, min C, B = 0','Machine, staff, min C','Machine, min C, B = 2A'][ph]}};
+}
+
+/* ---------- chart: production mix ---------- */
+function chartMix(host){
+  const s=E('svg',{viewBox:'0 0 1664 620',width:1664,height:620,'font-family':FONT},host);
+  const L=110,R=1150,T=50,B=530,X0=80,X1=280;
+  const X=v=>L+(v-X0)/(X1-X0)*(R-L),Y=v=>B-v/60*(B-T);
+  const A=v=>v<124?0.5*v-12:v<224?87.2-0.3*v:20,Bq=v=>v<124?0:v<224?0.4*v-49.6:40,C=()=>8;
+  [[80,124,'rgba(76,155,232,0.10)'],[124,224,'rgba(242,165,65,0.10)'],[224,280,'rgba(133,151,179,0.10)']].forEach(p=>E('rect',{x:X(p[0]),y:T,width:X(p[1])-X(p[0]),height:B-T,fill:p[2]},s));
+  for(let y=0;y<=60;y+=10){E('line',{x1:L,x2:R,y1:Y(y),y2:Y(y),stroke:'#24395A','stroke-width':1},s);E('text',{x:L-16,y:Y(y)+9,'text-anchor':'end',fill:'#8597B3','font-size':24},s).textContent=y}
+  [80,124,180,224,280].forEach(x=>{E('text',{x:X(x),y:B+38,'text-anchor':'middle',fill:x==180?'#F2A541':'#8597B3','font-size':24,'font-weight':x==180?700:400},s).textContent=x});
+  [124,224].forEach(x=>E('line',{x1:X(x),x2:X(x),y1:T,y2:B,stroke:'#8597B3','stroke-width':2,'stroke-dasharray':'4 8'},s));
+  E('line',{x1:L,x2:R,y1:B,y2:B,stroke:'#8597B3','stroke-width':2},s);
+  E('text',{x:(L+R)/2,y:B+82,'text-anchor':'middle',fill:'#C3CFDF','font-size':26},s).textContent='Staff hours available';
+  E('text',{x:30,y:(T+B)/2,'text-anchor':'middle',fill:'#C3CFDF','font-size':26,transform:'rotate(-90 30 '+(T+B)/2+')'},s).textContent='Units produced';
+  const S=[[A,'#4C9BE8','A',''],[Bq,'#F2A541','B',''],[C,'#AEBBD0','C','10 10']];
+  const paths=S.map(q=>E('path',{fill:'none',stroke:q[1],'stroke-width':7,'stroke-linejoin':'round','stroke-linecap':'round','stroke-dasharray':q[3]},s));
+  const guide=E('line',{y1:T,y2:B,stroke:'#F4F1EA','stroke-width':2,'stroke-dasharray':'6 8',opacity:0.6},s);
+  const dots=S.map(q=>E('circle',{r:12,fill:q[1],stroke:'#0F1B2D','stroke-width':4},s));
+  E('rect',{x:1200,y:T,width:440,height:B-T,rx:22,fill:'rgba(255,255,255,0.05)',stroke:'#2A4268','stroke-width':2},s);
+  E('text',{x:1232,y:T+50,fill:'#8597B3','font-size':24},s).textContent='Staff hours';
+  const vs=E('text',{x:1232,y:T+108,fill:'#F4F1EA','font-size':52,'font-weight':700},s);
+  const vals=S.map((q,i)=>{const y=T+180+i*72;E('rect',{x:1232,y:y-30,width:28,height:28,rx:6,fill:q[1]},s);E('text',{x:1276,y:y-4,fill:'#C3CFDF','font-size':28},s).textContent='Product '+q[2];return E('text',{x:1600,y:y-4,'text-anchor':'end',fill:'#F4F1EA','font-size':36,'font-weight':700},s)});
+  E('text',{x:1232,y:T+420,fill:'#8597B3','font-size':24},s).textContent='Optimal profit';
+  const vp=E('text',{x:1232,y:T+462,fill:'#F2A541','font-size':36,'font-weight':700},s);
+  const K=[[0,80],[2.2,124],[3,124],[4.6,180],[5.6,180],[7.2,224],[8,224],[9.8,280]];
+  return {K,draw(v){S.forEach((q,i)=>{let d='M'+X(80)+','+Y(q[0](80));for(let x=81;x<v;x++)d+='L'+X(x)+','+Y(q[0](x));d+='L'+X(v)+','+Y(q[0](v));paths[i].setAttribute('d',d);dots[i].setAttribute('cx',X(v));dots[i].setAttribute('cy',Y(q[0](v)));vals[i].textContent=q[0](v).toFixed(1)});
+    guide.setAttribute('x1',X(v));guide.setAttribute('x2',X(v));vs.textContent=Math.round(v);vp.textContent=fm(prof(v))}};
+}
+
+/* ---------- chart: prediction vs re-optimised ---------- */
+function chartPred(host){
+  const s=E('svg',{viewBox:'0 0 1664 620',width:1664,height:620,'font-family':FONT},host);
+  const L=130,R=1150,T=50,B=530,X0=80,X1=280,Y0=1700,Y1=3150;
+  const X=v=>L+(v-X0)/(X1-X0)*(R-L),Y=v=>B-(v-Y0)/(Y1-Y0)*(B-T),g=v=>2929.6+1.6*(v-180);
+  E('rect',{x:X(124),y:T,width:X(224)-X(124),height:B-T,fill:'rgba(76,155,232,0.12)'},s);
+  E('text',{x:(X(124)+X(224))/2,y:T+40,'text-anchor':'middle',fill:'#4C9BE8','font-size':28,'font-weight':700},s).textContent='valid range';
+  for(let y=1800;y<=3000;y+=200){E('line',{x1:L,x2:R,y1:Y(y),y2:Y(y),stroke:'#24395A','stroke-width':1},s);E('text',{x:L-16,y:Y(y)+9,'text-anchor':'end',fill:'#8597B3','font-size':24},s).textContent=y.toLocaleString('en-GB')}
+  [80,100,124,180,224,250,280].forEach(x=>{E('text',{x:X(x),y:B+38,'text-anchor':'middle',fill:x==180?'#F2A541':'#8597B3','font-size':24,'font-weight':x==180?700:400},s).textContent=x});
+  E('line',{x1:L,x2:R,y1:B,y2:B,stroke:'#8597B3','stroke-width':2},s);
+  E('text',{x:(L+R)/2,y:B+82,'text-anchor':'middle',fill:'#C3CFDF','font-size':26},s).textContent='Staff hours available';
+  const gap=E('path',{fill:'rgba(242,165,65,0.22)',stroke:'none'},s);
+  let da='';for(let x=80;x<=280;x++)da+=(x==80?'M':'L')+X(x)+','+Y(prof(x));E('path',{d:da,fill:'none',stroke:'#4C9BE8','stroke-width':7,'stroke-linejoin':'round'},s);
+  E('line',{x1:X(80),y1:Y(g(80)),x2:X(280),y2:Y(g(280)),stroke:'#F2A541','stroke-width':5,'stroke-dasharray':'16 12'},s);
+  E('text',{x:X(134),y:Y(2250),fill:'#F2A541','font-size':26,'font-weight':700},s).textContent='prediction: 2,929.60 + 1.60 × (s − 180)';
+  E('text',{x:X(250),y:Y(prof(250))+44,fill:'#4C9BE8','font-size':26,'font-weight':700,'text-anchor':'middle'},s).textContent='re-optimised';
+  const gl=E('line',{stroke:'#F4F1EA','stroke-width':3},s);
+  const d1=E('circle',{r:12,fill:'#F2A541',stroke:'#0F1B2D','stroke-width':4},s),d2=E('circle',{r:12,fill:'#4C9BE8',stroke:'#0F1B2D','stroke-width':4},s);
+  E('rect',{x:1200,y:T,width:440,height:B-T,rx:22,fill:'rgba(255,255,255,0.05)',stroke:'#2A4268','stroke-width':2},s);
+  const lab=(y,t)=>{E('text',{x:1232,y:y,fill:'#8597B3','font-size':24},s).textContent=t};
+  const val=(y,sz,c)=>E('text',{x:1232,y:y,fill:c,'font-size':sz,'font-weight':700},s);
+  lab(T+48,'Staff hours');const vs=val(T+100,48,'#F4F1EA');
+  lab(T+150,'Shadow-price prediction');const vg=val(T+196,40,'#F2A541');
+  lab(T+246,'Re-optimised profit');const vf=val(T+292,40,'#4C9BE8');
+  lab(T+342,'Prediction − actual');const vd=val(T+392,44,'#F4F1EA');
+  const st=E('text',{x:1232,y:T+450,fill:'#C3CFDF','font-size':26,'font-weight':600},s);
+  const K=[[0,80],[1.2,100],[2.6,100],[3.8,124],[5.2,180],[6,180],[7.2,224],[8.2,250],[9.8,250],[10.8,280]];
+  return {K,draw(v){let up='',lo='';for(let x=80;x<v;x++)up+=(x==80?'M':'L')+X(x)+','+Y(g(x));up+=(v<=80?'M':'L')+X(v)+','+Y(g(v));for(let x=Math.floor(v);x>=80;x--)lo+='L'+X(x)+','+Y(prof(x));gap.setAttribute('d',up+'L'+X(v)+','+Y(prof(v))+lo+'Z');
+    gl.setAttribute('x1',X(v));gl.setAttribute('x2',X(v));gl.setAttribute('y1',Y(g(v)));gl.setAttribute('y2',Y(prof(v)));
+    d1.setAttribute('cx',X(v));d1.setAttribute('cy',Y(g(v)));d2.setAttribute('cx',X(v));d2.setAttribute('cy',Y(prof(v)));
+    vs.textContent=Math.round(v);vg.textContent=fm(g(v));vf.textContent=fm(prof(v));vd.textContent=fm(Math.max(0,g(v)-prof(v)));
+    const ok=v>=124&&v<=224;st.textContent=ok?'Inside the range: exact':'Outside: too high';st.setAttribute('fill',ok?'#4C9BE8':'#F2A541')}};
+}
+
+/* ---------- count-up cards ---------- */
+function chartCount(host){
+  host.innerHTML='<div class="cw"><div class="cc big"><div class="cl">Optimal profit</div><div class="cv" data-k="p">£0.00</div><div class="cu">per planning period</div></div>'+
+  '<div class="cc"><div class="cl">Product A</div><div class="cv" data-k="a">0.0</div><div class="cu">units</div></div>'+
+  '<div class="cc"><div class="cl">Product B</div><div class="cv" data-k="b">0.0</div><div class="cu">units</div></div>'+
+  '<div class="cc"><div class="cl">Product C</div><div class="cv" data-k="c">0.0</div><div class="cu">units (minimum)</div></div></div>';
+  const T={p:2929.6,a:33.2,b:22.4,c:8},el={};host.querySelectorAll('[data-k]').forEach(e=>el[e.dataset.k]=e);
+  return {K:[[0,0],[2.4,1]],draw(x){x=1-Math.pow(1-x,3);el.p.textContent=fm(T.p*x);el.a.textContent=(T.a*x).toFixed(1);el.b.textContent=(T.b*x).toFixed(1);el.c.textContent=(T.c*x).toFixed(1)}};
+}
+
+const MAKERS={profit:chartProfit,mix:chartMix,pred:chartPred,count:chartCount};
+const charts=new Map();
+document.querySelectorAll('[data-chart]').forEach(h=>charts.set(h,MAKERS[h.dataset.chart](h)));
+let raf=null;
+function play(slide){
+  if(raf)cancelAnimationFrame(raf);
+  const list=[...slide.querySelectorAll('[data-chart]')].map(h=>charts.get(h));
+  const t0=performance.now();
+  function f(now){const t=(now-t0)/1000;let done=true;list.forEach(c=>{const end=c.K[c.K.length-1][0];c.draw(keyAt(c.K,Math.min(t,end)));if(t<end)done=false});if(!done)raf=requestAnimationFrame(f)}
+  if(STATIC){list.forEach(c=>c.draw(c.K[c.K.length-1][1]));return}
+  raf=requestAnimationFrame(f);
+}
+function builds(slide){
+  const items=[...slide.querySelectorAll('[data-anim]')].sort((a,b)=>a.dataset.order-b.dataset.order);
+  items.forEach(e=>{e.classList.remove('in');e.style.transitionDelay=''});
+  if(STATIC){items.forEach(e=>e.classList.add('in'));return}
+  void slide.offsetWidth;
+  items.forEach((e,i)=>{e.style.transitionDelay=(0.35+i*0.45)+'s';e.classList.add('in')});
+}
+
+const slides=[...document.querySelectorAll('.slide')];let cur=0;
+function show(i){i=Math.max(0,Math.min(slides.length-1,i));slides.forEach((s,k)=>s.classList.toggle('active',k===i));cur=i;builds(slides[i]);play(slides[i]);
+  document.getElementById('count').textContent=(i+1)+' / '+slides.length;document.getElementById('slide-status').textContent=(i+1)+' / '+slides.length;document.getElementById('previous-slide').disabled=i===0;document.getElementById('next-slide').disabled=i===slides.length-1;if(!STATIC){try{history.replaceState(null,'','#'+(i+1))}catch(_){}}}
+document.addEventListener('keydown',e=>{
+  if(['ArrowRight','PageDown',' ','Enter'].includes(e.key)){e.preventDefault();show(cur+1)}
+  else if(['ArrowLeft','PageUp','Backspace'].includes(e.key)){e.preventDefault();show(cur-1)}
+  else if(e.key==='Home')show(0);else if(e.key==='End')show(slides.length-1);
+  else if(e.key==='r'||e.key==='R')show(cur);
+  else if(e.key==='f'||e.key==='F'){toggleFullscreen()}
+});
+document.getElementById('stage').addEventListener('click',e=>{const r=document.body.getBoundingClientRect();show(cur+(e.clientX<r.width/3?-1:1))});
+function fit(){const st=document.getElementById('stage');const usableHeight=Math.max(100,innerHeight-64);const k=Math.min(innerWidth/1920,usableHeight/1080);st.style.transform='translate('+((innerWidth-1920*k)/2)+'px,'+((usableHeight-1080*k)/2)+'px) scale('+k+')'}
+document.getElementById('previous-slide').addEventListener('click',()=>show(cur-1));
+document.getElementById('next-slide').addEventListener('click',()=>show(cur+1));
+document.getElementById('replay-slide').addEventListener('click',()=>show(cur));
+async function toggleFullscreen(){try{if(!document.fullscreenElement)await document.documentElement.requestFullscreen();else await document.exitFullscreen()}catch(_){document.getElementById('full-screen').textContent='Use browser full screen'}}
+document.getElementById('full-screen').addEventListener('click',toggleFullscreen);
+addEventListener('resize',fit);fit();
+if(STATIC){document.body.classList.add('static');slides.forEach(s=>{s.classList.add('active');builds(s);play(s)})}
+else show((parseInt(location.hash.slice(1))||1)-1);
+})();
+</script>
+</body></html>
